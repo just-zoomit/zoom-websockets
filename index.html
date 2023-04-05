@@ -1,0 +1,55 @@
+<html>
+
+<head>
+    <title>websocket</title>
+</head>
+
+<body>
+<script>
+<!-- open the websocket connection -->
+    var exampleSocket = new WebSocket("wss://ws.zoom.us/ws?subscriptionId=JVcwQpcpS1GqNtkp5YBv_g&access_token=" + `${access_token}`);
+
+    exampleSocket.onopen = function (event) {
+        log("Connection...");
+        // Send the command module = heartbeat to keep the connection alive every 30 seconds
+        var msg = {
+            module: "heartbeat"
+        };
+        // Send the msg object as a JSON-formatted string.
+        exampleSocket.send(JSON.stringify(msg));
+    };
+
+
+    exampleSocket.onmessage = function (event) {
+        // Do we need to print this in the console?????
+        console.log(JSON.stringify(event.data));
+        log(event.data)     
+    }
+
+    exampleSocket.onclose = function(event){
+        // Do we need to print this in the console?????
+        console.log(JSON.stringify(event));
+        console.log(event);
+
+    }
+
+    var t = setInterval(function(){ 
+        var msg = {
+            module: "heartbeat"
+        };
+        exampleSocket.send(JSON.stringify(msg));
+        log(JSON.stringify(msg));
+    }, 25000);
+
+
+    function log(text){
+        var txt = document.createTextNode(text);
+        var p = document.createElement("p");
+        p.appendChild(txt);
+        // Do we need to print this in the console?????
+        console.log(txt)
+        document.body.appendChild(p);
+    }
+</script>
+</body>
+</html>
