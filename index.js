@@ -3,12 +3,14 @@ require("dotenv/config");
 
 // Use axios to make HTTP requests from Node
 const axios = require("axios");
-
+const path = require('path')
 const fs = require("fs");
+
 
 // Run the express app
 const express = require("express");
 const app = express();
+app.use(express.static(path.join(__dirname, 'public')))
 let access_token = "";
 let scopes = "";
 
@@ -31,11 +33,12 @@ async function getAccessToken() {
   }
 }
 
-app.get("/", async (req, res) => {
+app.get("/websocket", async (req, res) => {
   try {
+    const acc = await getAccessToken();
     
       // Read the HTML file
-      fs.readFile("index.html", "utf8", (err, data) => {
+      fs.readFile("public/index.html", "utf8", (err, data) => {
         if (err) {
           console.error(err);
           res.status(500).send("Internal Server Error");
@@ -43,7 +46,7 @@ app.get("/", async (req, res) => {
         }
 
         // Replace the access token in the HTML code
-        data = data.replace("${access_token}", access_token);
+        data = data.replace("${access_token}", acc);
 
         // Send the HTML code as the response
         res.send(data);
