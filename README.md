@@ -13,7 +13,7 @@ Follow allong with relevant Zoom Server-to-Server OAuth documentation as we set 
 Clone and install the app and it's dependencies. We'll be using [Express](https://www.npmjs.com/package/express) for a basic Node.js server, [dotenv](https://www.npmjs.com/package/dotenv) for our credentials, [requests](https://www.npmjs.com/package/requests) to make HTTP requests and [nodemon](https://www.npmjs.com/package/nodemon) for easier development refreshing. 
 
 ```bash
-git clone (https://github.com/elisalevet/server-to-server-app.git)
+git clone https://github.com/just-zoomit/zoom-websockets
 ```
 
 ```bash
@@ -57,10 +57,11 @@ Copy these credentials and add them to your `.env` file.
 Example:
 
 ```
-accountID=012345
-clientID=1234567890
-clientSecret=13245678901234567890
-userID=me 
+account_id=YOUR_ACCOUNT_ID
+clientID=YOUR_CLINET_ID
+clientSecret=YOUR_CLINET_SECERET
+user_id=me
+subscription_id=YOUR_SUBSCRIPTION_ID
 ```
 
 ### Fill out app information.
@@ -85,7 +86,7 @@ Enable the Event Subscriptions in your app [Event Subscriptions](https://marketp
 Add an Event Subscription and select Websockets as Method type, make sure to add the events "meeting has been created" and "meeting has been created" and "meeting has been deleted". Once that's done, an endpoint URL will get generated for you and we are going to use it to open the Websocket connection for our sample app (Line 54 in our index.js file). Click save and go to the Activation Tab to finally activate your app.
 
 ## Using your app
-With our app running on `localhost:4000`, you will see the Websocket Conection open and you will be expecting to receive the payload for the events you have subscribed to and see them printed in the browser.
+With our app running on `[localhost:4000/websocket](http://localhost:4000/websocket)`, you will see the Websocket Conection open and you will be expecting to receive the payload for the events you have subscribed to and see them printed in the browser.
 
 
 ## Next steps
